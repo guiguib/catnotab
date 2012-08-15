@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<servlet>
+		<servlet-name>dispatch</servlet-name>
+		<servlet-class>fr.gbourquet.catnotab.service.dispatch.MyDispatchServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>dispatch</servlet-name>
+		<!-- '/dispatch' is the default location that the client-side classes point 
+			at. -->
+		<url-pattern>/catnotab/dispatch</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>fr.gbourquet.catnotab.service.dispatch.MyActionHandlersConfig</listener-class>
+	</listener>
+
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Catnotab.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>

@@ -1,0 +1,17 @@
+package fr.gbourquet.catnotab.client.mvp;
+
+import net.customware.gwt.dispatch.client.DispatchAsync;
+
+import com.google.gwt.place.shared.PlaceController;
+import com.google.web.bindery.event.shared.EventBus;
+
+import fr.gbourquet.catnotab.client.mvp.presenter.AcceuilPresenter;
+import fr.gbourquet.catnotab.client.mvp.presenter.LoginPresenter;
+
+public interface ClientFactory {
+    EventBus getEventBus();
+    PlaceController getPlaceController();
+    DispatchAsync getDistpatcher();
+    AcceuilPresenter.View getAcceuilView();
+    LoginPresenter.View getLoginView();
+}

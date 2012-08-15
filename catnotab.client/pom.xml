@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>fr.gbourquet.catnotab</groupId>
+		<artifactId>catnotab</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>catnotab.client</artifactId>
+	<packaging>war</packaging>
+
+	<name>Projet client</name>
+
+	<properties>
+
+		<!-- convenience to define GWT version in one place -->
+		<gwt.version>2.4.0</gwt.version>
+		<gwt-dispatch.version>1.1.0</gwt-dispatch.version>
+		<!-- tell the compiler we can use 1.5 -->
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<webappDirectory>${project.build.directory}/catnotab</webappDirectory>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>fr.gbourquet.catnotab</groupId>
+			<artifactId>catnotab.serveur</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<optional>false</optional>
+		</dependency>
+		<!-- GWT dependencies (from central repo) -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.customware.gwt.dispatch</groupId>
+			<artifactId>gwt-dispatch</artifactId>
+			<version>${gwt-dispatch.version}</version>
+		</dependency>
+		<!-- test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- Generate compiled stuff in the folder used for developing mode -->
+		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>2.4.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<runTarget>catnotab/index.html</runTarget>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<runTarget>index.html</runTarget>
+					<hostedWebapp>${webappDirectory}</hostedWebapp>
+					<i18nMessagesBundle>fr.gbourquet.catnotab.gui.client.Messages</i18nMessagesBundle>
+					<webappDirectory>${webappDirectory}</webappDirectory>
+					<module>fr.gbourquet.Catnotab</module>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<localWorkers>1</localWorkers>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
