@@ -95,7 +95,13 @@
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 				</configuration>
 			</plugin>
-
+                        <plugin>
+                           <artifactId>maven-war-plugin</artifactId>
+                           <version>2.1-beta-1</version>
+                           <configuration>
+                              <warSourceDirectory>war</warSourceDirectory>
+                           </configuration>
+                        </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
