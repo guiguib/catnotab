@@ -12,10 +12,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
+		<database.server>localhost</database.server>
 	</properties>
 	<modules>
-	  <module>catnotab.serveur</module>
-      <module>catnotab.client</module>
+		<module>catnotab.sql</module>
+		<module>catnotab.serveur</module>
+		<module>catnotab.client</module>
 	</modules>
 	<dependencies>
 		<dependency>

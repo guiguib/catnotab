@@ -5,7 +5,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 public class GwtTestSample extends GWTTestCase {
 
 	public String getModuleName() {
-		return "fr.gbourquet.simple.Simple";
+		return "fr.gbourquet.catnotab.Catnotab";
 	}
 
 	public void testSomething() {

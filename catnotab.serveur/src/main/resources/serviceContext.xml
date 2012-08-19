@@ -4,10 +4,11 @@
 <beans>
 
 	<bean id="loginService"
-		class="fr.gbourquet.catnotab.serveur.service.login.LoginServiceImpl">
+		class="fr.gbourquet.catnotab.serveur.service.LoginServiceImpl">
+		<property name="daoFactory" ref="daoFactory" />
 	</bean>
 
-	
+
 
 
 </beans>       

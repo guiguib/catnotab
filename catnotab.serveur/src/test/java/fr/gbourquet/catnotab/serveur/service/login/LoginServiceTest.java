@@ -2,7 +2,8 @@ package fr.gbourquet.catnotab.serveur.service.login;
 
 import junit.framework.TestCase;
 import fr.gbourquet.catnotab.serveur.metier.Personne;
-import fr.gbourquet.catnotab.serveur.service.login.LoginService;
+import fr.gbourquet.catnotab.serveur.service.LoginService;
+import fr.gbourquet.catnotab.serveur.service.Exception.ServiceException;
 import fr.gbourquet.catnotab.serveur.util.BeanFactory;
 
 
@@ -27,12 +28,15 @@ public class LoginServiceTest extends TestCase {
  
     public void testGetUtilisateur(){
  
-        Personne util = service.login("identifiant", "12345");
-        
-        //test
-        assertNotNull(util);
-        assertNotNull(util.getNom());
-        assertEquals(0,util.getIdPersonne().intValue());
-                
+        try {
+        	Personne util = service.login("admin", "admin");
+        	//test
+            assertNotNull(util);
+            assertNotNull(util.getNom());
+            }
+        catch (ServiceException e)
+        {
+        	fail();
+        }
     }
 }

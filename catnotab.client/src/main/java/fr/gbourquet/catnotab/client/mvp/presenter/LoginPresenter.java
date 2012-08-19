@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
 
@@ -32,21 +33,11 @@ public class LoginPresenter extends AbstractActivity {
 	public interface View extends IsWidget {
 
 		/**
-		 * Methode pour afficher la vue.
-		 */
-		void show();
-
-		/**
-		 * Methode pour cacher la vue.
-		 */
-		void hide();
-
-		/**
 		 * Methode d'acces à la valeur du champ id.
 		 * 
 		 * @return String le contenu du champ id
 		 */
-		String getId();
+		String getLogin();
 
 		/**
 		 * Methode d'acces à la valeur du champ passwd.
@@ -60,7 +51,7 @@ public class LoginPresenter extends AbstractActivity {
 		 * 
 		 * @return Button le bouton login
 		 */
-		Button getLogin();
+		Button getLoginButton();
 
 		/**
 		 * Methode d'acces en écriture à la valeur du champ login.
@@ -68,7 +59,7 @@ public class LoginPresenter extends AbstractActivity {
 		 * @param login
 		 *            valeur à mettre à jour
 		 */
-		void setId(String id);
+		void setLogin(String login);
 
 		/**
 		 * Methode d'acces en écriture à la valeur du champ passwd.
@@ -82,7 +73,7 @@ public class LoginPresenter extends AbstractActivity {
 		 * Methode d'ecriture d'un message d'erreur.
 		 * 
 		 */
-		void errorLogin();
+		void errorLogin(String message);
 
 	}
 
@@ -111,13 +102,16 @@ public class LoginPresenter extends AbstractActivity {
 	@Override
 	public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBusBidon) {
 		
-		view.getLogin().addClickHandler(new ClickHandler() {
+		final DialogBox popup = new DialogBox();
+		popup.add(view);
+		popup.show();
+		view.getLoginButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				/*
 				 * On appelle le service de login.Si Ok, on ferme la fenetre,
 				 * sinon on affiche un message d'erreur
 				 */
-				dispatcher.execute(new LoginAction(view.getId(),
+				dispatcher.execute(new LoginAction(view.getLogin(),
 						view.getPasswd()),
 						new AsyncCallback<LoginResult>() {
 							public void onSuccess(final LoginResult result) {
@@ -128,27 +122,26 @@ public class LoginPresenter extends AbstractActivity {
 									eventBus.fireEvent(new LoginEvent(
 											utilisateur));
 									// On ferme la fenetre de login
-									view.hide();
+									popup.hide();
 								} else {
-									view.errorLogin();
-									view.setId("");
+									view.errorLogin("Erreur de connexion");
+									view.setLogin("");
 									view.setPasswd("");
 								}
 							}
 
 							public void onFailure(final Throwable e) {
 								e.printStackTrace();
-								view.errorLogin();
-								view.setId("");
+								view.errorLogin(e.getMessage());
+								view.setLogin("");
 								view.setPasswd("");
 							}
 						});
 			}
 		});
-		view.show();
 	}
 
 	public void setLogin(String login) {
-		view.setId(login);
+		view.setLogin(login);
 	}
 }
