@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:VerticalPanel>
+		<g:Label ui:field="error"></g:Label> 
+		<g:HTMLPanel>
+			<table>
+				<tr>
+					<td>login :</td>
+					<td>
+						<g:TextBox ui:field="login"></g:TextBox>
+					</td>
+				</tr>
+				<tr>
+					<td>passwd :</td>
+					<td>
+						<g:TextBox ui:field="passwd"></g:TextBox>
+					</td>
+				</tr>
+			</table>
+		</g:HTMLPanel>
+
+		<g:Button styleName="{style.important}" ui:field="buttonLogin" />
+	</g:VerticalPanel>
+
+</ui:UiBinder> 
