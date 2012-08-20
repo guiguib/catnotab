@@ -1,0 +1,293 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,body {
+	height: 100%;
+}
+
+body {
+	background: #fff;
+	color: #393939;
+	font-family: Arial;
+}
+
+/* GENERAL  -------------------------------------------------------- */
+table {
+	border-collapse: collapse;
+}
+
+a {
+	outline: none;
+	text-decoration: none;
+}
+
+a:hover {
+	
+}
+
+img {
+	border: 0;
+}
+
+p {
+	margin: 0px;
+	padding: 0px;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+#page-top-outer {
+	background: url(../images/shared/top_bg.jpg) top center repeat-x;
+	border-bottom: 1px solid #7e7e7e;
+	height: 92px;
+}
+
+#page-top {
+	margin: 0 0 0 15px;
+	max-width: 1260px;
+	min-width: 850px;
+	position: relative;
+}
+
+#logo {
+	float: left;
+	margin: 25px 0 0 15px;
+}
+
+#logo a {
+	display: block;
+}
+
+#firstMenu {
+	margin: 0 0 0 30px;
+	max-width: 1260px;
+	min-width: 850px;
+	position: relative;
+}
+
+
+.clear {
+	clear: both;
+	font-size: 0px;
+	height: 0;
+	line-height: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.nav-outer-repeat {
+	background: url(../images/shared/nav/repeat.jpg) repeat-x;
+	height: 77px;
+}
+
+.nav-divider	{
+	background: url(../images/shared/nav/divider.jpg) top no-repeat;
+	float: left;
+	height: 40px;
+	width: 15px;
+	}
+	
+/* FOOTER -------------------------------------------------------------- */
+#footer {
+	height: 70px;
+	margin: 80px auto 0px auto;
+	padding: 0px 0 0 0;
+	text-align: left;
+	min-width: 780px;
+	max-width: 1260px;
+}
+
+#footer-left {
+	color: #818181;
+	font-size: 11px;
+	line-height: 11px;
+	padding: 15px 0 15px 25px;
+	margin: 0 20px;
+	border-top: 1px solid #dbdbdb;
+	border-bottom: 1px solid #dbdbdb;
+	background: url(../images/shared/icon_idlogo.jpg) no-repeat 0 12px;
+}
+
+#footer-left a {
+	color: #818181;
+	text-decoration: none;
+}
+
+#footer-left 	 a.selected,#footer-left 	 a:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+/* GWT -------------------------------------------------------------- */
+.loginPanel label {
+	display: block;
+	width: 100px;
+	float: left;
+}
+
+.gwt-DialogBox {
+	
+}
+
+.gwt-DialogBox .Caption {
+	BORDER-BOTTOM: #bbbbbb 1px solid;
+	PADDING-BOTTOM: 2px;
+	PADDING-RIGHT: 8px;
+	FONT-FAMILY: Arial Unicode MS, Arial, sans-serif;
+	CURSOR: default;
+	FONT-WEIGHT: bold;
+	PADDING-TOP: 10px;
+}
+
+.gwt-DialogBox .dialogContent {
+	
+}
+
+.gwt-DialogBox .dialogMiddleCenter {
+	PADDING-BOTTOM: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-RIGHT: 3px;
+	BACKGROUND: #a8aaa7;
+	PADDING-TOP: 3px
+}
+
+.gwt-DialogBox .dialogBottomCenter {
+	BACKGROUND: url(images/hborder.png) repeat-x 0px -40px;
+}
+
+.gwt-DialogBox .dialogTopCenter {
+	BACKGROUND: url(images/hborder.png) repeat-x 0px 0px;
+}
+
+.gwt-DialogBox .dialogMiddleLeft {
+	BACKGROUND: url(images/vborder.png) repeat-y 5px 0px
+}
+
+.gwt-DialogBox .dialogMiddleRight {
+	BACKGROUND: url(images/vborder.png) repeat-y -40px 0px;
+}
+
+.gwt-DialogBox .dialogTopLeftInner {
+	WIDTH: 40px;
+	ZOOM: 1;
+	HEIGHT: 40px
+}
+
+.gwt-DialogBox .dialogTopRightInner {
+	WIDTH: 40px;
+	ZOOM: 1
+}
+
+.gwt-DialogBox .dialogBottomLeftInner {
+	WIDTH: 40px;
+	ZOOM: 1;
+	HEIGHT: 40px
+}
+
+.gwt-DialogBox .dialogBottomRightInner {
+	WIDTH: 40px;
+	ZOOM: 1;
+	HEIGHT: 12px
+}
+
+.gwt-DialogBox .dialogTopLeft {
+	BACKGROUND: url(images/circles.png) no-repeat 5px 0px;
+}
+
+.gwt-DialogBox .dialogTopRight {
+	BACKGROUND: url(images/circles.png) no-repeat -20px -80px;
+}
+
+.gwt-DialogBox .dialogBottomLeft {
+	BACKGROUND: url(images/circles.png) no-repeat 5px -51px;
+}
+
+.gwt-DialogBox .dialogBottomRight {
+	BACKGROUND: url(images/circles.png) no-repeat -20px -120px;
+}
+
+* HTML .gwt-DialogBox .dialogTopLeftInner {
+	WIDTH: 40px;
+	OVERFLOW: hidden
+}
+
+* HTML .gwt-DialogBox .dialogTopRightInner {
+	WIDTH: 40px;
+	OVERFLOW: hidden
+}
+
+* HTML .gwt-DialogBox .dialogBottomLeftInner {
+	WIDTH: 40px;
+	HEIGHT: 40px;
+	OVERFLOW: hidden
+}
+
+* HTML .gwt-DialogBox .dialogBottomRightInner {
+	WIDTH: 40px;
+	HEIGHT: 40px;
+	OVERFLOW: hidden
+}
+
+.gwt-Label {
+	padding: 5px;
+}
+
+.gwt-Button {
+	margin: 0 7px 0 0;
+	background-color: #505050;
+	color: #ffffff;
+	border: 1px solid #dedede;
+	border-top: 1px solid #eee;
+	border-left: 1px solid #eee;
+	text-decoration: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 5px 10px 6px 7px; /* Links */
+	width: auto;
+	overflow: visible;
+	padding: 4px 10px 3px 7px; /* IE6 */
+}
+
+.gwt-Button:ACTIVE {
+	background-color: #363636;
+	border: 1px solid #C6D880;
+	color: #ffffff;
+	padding: 6px 9px 5px 8px; /* Links */
+	padding: 5px 9px 2px 8px; /* IE6 */
+}
+
+.gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering {
+	color: #FFFFFF;
+	float: left;
+	height: 37px;
+	line-height: 35px;
+	padding: 0 10px 0 10px;
+	text-decoration: none;
+	white-space: nowrap;
+	display: table-cell;
+	list-style: none outside none;
+	margin: 0 10px 0 0;
+	width: auto;
+}
+
+.gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering {
+	background: url("images/shared/nav/pro_line_1.gif") repeat scroll 0 0
+		transparent;
+	color: #FFFFFF;
+	float: left;
+	height: 37px;
+	line-height: 35px;
+	padding: 0 10px 0 10px;
+	text-decoration: none;
+	white-space: nowrap;
+	display: table-cell;
+	list-style: none outside none;
+	margin: 0 10px 0 0;
+	width: auto;
+	outline : none;
+}

@@ -6,6 +6,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -26,7 +27,7 @@ public class LoginView extends Composite implements LoginPresenter.View  {
 	TextBox login;
 
 	@UiField
-	TextBox passwd;
+	PasswordTextBox passwd;
 
 	@UiField
 	Label error;
@@ -34,41 +35,40 @@ public class LoginView extends Composite implements LoginPresenter.View  {
 	public LoginView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		buttonLogin.setText("Login");
+		error.setText("Veuillez entrer vos identifiants de connexion");
 	}
 
 	@Override
-	public String getPasswd() {
+	public TextBox getPasswd() {
 		// TODO Auto-generated method stub
-		return passwd.getText();
+		return passwd;
 	}
 
 	@Override
-	public void setPasswd(String passwd) {
-		this.passwd.setText(passwd);
+	public void setPasswd(PasswordTextBox passwd) {
+		this.passwd = passwd;
 		
 	}
 
 	@Override
 	public void errorLogin(String message) {
 		this.error.setText(message);
-		
 	}
 
 	@Override
 	public Button getLoginButton() {
-		// TODO Auto-generated method stub
 		return buttonLogin;
 	}
 
 	@Override
-	public void setLogin(String login) {
-		this.login.setText(login);
+	public void setLogin(TextBox login) {
+		this.login = login;
 		
 	}
 
 	@Override
-	public String getLogin() {
-		return this.login.getText();
+	public TextBox getLogin() {
+		return this.login;
 	}
 
 }

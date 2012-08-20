@@ -9,8 +9,11 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 import fr.gbourquet.catnotab.client.mvp.presenter.AcceuilPresenter;
+import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter;
+import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter.View;
 import fr.gbourquet.catnotab.client.mvp.presenter.LoginPresenter;
 import fr.gbourquet.catnotab.client.mvp.view.AcceuilView;
+import fr.gbourquet.catnotab.client.mvp.view.FirstMenuView;
 import fr.gbourquet.catnotab.client.mvp.view.LoginView;
 
 public class ClientFactoryImpl implements ClientFactory {
@@ -18,6 +21,7 @@ public class ClientFactoryImpl implements ClientFactory {
     private final PlaceController placeController = new PlaceController(eventBus);
     private final AcceuilPresenter.View acceuilView = new AcceuilView();
     private final LoginPresenter.View loginView = new LoginView();
+    private final FirstMenuPresenter.View firstMenuView = new FirstMenuView();
     private final DispatchAsync dispatcher = new StandardDispatchAsync(new DefaultExceptionHandler());
 
     @Override
@@ -43,6 +47,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public DispatchAsync getDistpatcher() {
 		return dispatcher;
+	}
+
+	@Override
+	public View getFirstMenuView() {
+		return firstMenuView;
 	}
 
 	    

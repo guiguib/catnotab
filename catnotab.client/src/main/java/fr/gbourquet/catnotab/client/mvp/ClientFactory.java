@@ -6,6 +6,7 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
 
 import fr.gbourquet.catnotab.client.mvp.presenter.AcceuilPresenter;
+import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter;
 import fr.gbourquet.catnotab.client.mvp.presenter.LoginPresenter;
 
 public interface ClientFactory {
@@ -14,4 +15,5 @@ public interface ClientFactory {
     DispatchAsync getDistpatcher();
     AcceuilPresenter.View getAcceuilView();
     LoginPresenter.View getLoginView();
+	FirstMenuPresenter.View getFirstMenuView();
 }

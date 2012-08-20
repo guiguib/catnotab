@@ -40,7 +40,7 @@ public class Catnotab implements EntryPoint {
         AppPlaceHistoryMapper historyMapper= GWT.create(AppPlaceHistoryMapper.class);
         PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
         historyHandler.register(placeController, eventBus, defaultPlace);
-
+        
         // Goes to the place represented on URL else default place
         historyHandler.handleCurrentHistory();
         

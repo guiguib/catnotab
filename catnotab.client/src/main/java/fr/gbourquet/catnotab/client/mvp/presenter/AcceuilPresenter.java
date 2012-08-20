@@ -32,20 +32,27 @@ public class AcceuilPresenter extends AbstractActivity {
 
 	@Override
 	public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBusBidon) {
-		//On s'affiche
-		RootPanel.get("contenu").add(view.asWidget() );
 		
+		final AcceptsOneWidget lPanel = panel;
+		final com.google.gwt.event.shared.EventBus lEventBus = eventBusBidon;
 		
 		// On s'inscrit aux evenements du Bus
 		eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
 
 			@Override
 			public void onLogin(final LoginEvent event) {
+				//On s'affiche
+				RootPanel.get("contenu").add(view.asWidget() );
+				
+				//On affiche le menu1
+				FirstMenuPresenter menu1 = new FirstMenuPresenter(factory);
+				menu1.start(lPanel, lEventBus);
+				
 				// On affiche un message de bienvenue
 				view.hello(event.getUtilisateur().getNom());
 			}
 		});
 		
-		factory.getPlaceController().goTo(new LoginPlace("toto","titi"));
+		factory.getPlaceController().goTo(new LoginPlace("",""));
 	}
 }
