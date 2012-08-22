@@ -21,7 +21,7 @@ public final class BeanFactory extends ClassPathXmlApplicationContext {
      * Constructeur.
      */
     private BeanFactory() {
-        super("applicationContext.xml");
+        super("serveurContext.xml");
     }
 
     /**

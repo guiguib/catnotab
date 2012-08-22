@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.web.bindery.event.shared.EventBus;
 
 import fr.gbourquet.catnotab.client.mvp.ClientFactory;
-import fr.gbourquet.catnotab.client.mvp.place.AcceuilPlace;
+import fr.gbourquet.catnotab.client.mvp.place.AppPlace;
 import fr.gbourquet.catnotab.client.mvp.place.AppPlaceHistoryMapper;
 import fr.gbourquet.catnotab.client.mvp.presenter.AppPresenterMapper;
 
@@ -20,7 +20,7 @@ import fr.gbourquet.catnotab.client.mvp.presenter.AppPresenterMapper;
  */
 public class Catnotab implements EntryPoint {
 	
-	private Place defaultPlace = new AcceuilPlace("");
+	private Place defaultPlace = new AppPlace("");
     
     /**
 	 * This is the entry point method.

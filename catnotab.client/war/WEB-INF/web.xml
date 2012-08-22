@@ -5,19 +5,30 @@
 <web-app>
 	<servlet>
 		<servlet-name>dispatch</servlet-name>
-		<servlet-class>fr.gbourquet.catnotab.service.dispatch.MyDispatchServiceServlet</servlet-class>
+		<servlet-class>net.customware.gwt.dispatch.server.spring.SpringStandardDispatchServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>dispatch</servlet-name>
-		<!-- '/dispatch' is the default location that the client-side classes point 
-			at. -->
 		<url-pattern>/catnotab/dispatch</url-pattern>
 	</servlet-mapping>
 
+	<!-- <servlet> <servlet-name>dispatch</servlet-name> <servlet-class>fr.gbourquet.catnotab.service.dispatch.MyDispatchServiceServlet</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>dispatch</servlet-name> <url-pattern>/catnotab/dispatch</url-pattern> 
+		</servlet-mapping> -->
+
 	<listener>
-		<listener-class>fr.gbourquet.catnotab.service.dispatch.MyActionHandlersConfig</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
+	</listener>
+
+	<!-- <listener> <listener-class>fr.gbourquet.catnotab.service.dispatch.MyActionHandlersConfig</listener-class> 
+		</listener> -->
 
 
 	<!-- Default page to serve -->

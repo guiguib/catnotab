@@ -5,16 +5,14 @@ import net.customware.gwt.dispatch.client.DispatchAsync;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.HasKeyPressHandlers;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.web.bindery.event.shared.EventBus;
 
 import fr.gbourquet.catnotab.client.event.LoginEvent;
@@ -42,21 +40,24 @@ public class LoginPresenter extends AbstractActivity {
 		 * 
 		 * @return String le contenu du champ id
 		 */
-		TextBox getLogin();
+		String getLoginText();
 
 		/**
 		 * Methode d'acces à la valeur du champ passwd.
 		 * 
 		 * @return String le contenu du champ passwd
 		 */
-		TextBox getPasswd();
+		String getPasswdText();
 
+		HasKeyPressHandlers getLoginKeyPress();
+		HasKeyPressHandlers getPasswdKeyPress();
+		
 		/**
 		 * Methode d'acces au bouton login.
 		 * 
 		 * @return Button le bouton login
 		 */
-		Button getLoginButton();
+		HasClickHandlers getLoginButton();
 
 		/**
 		 * Methode d'acces en écriture à la valeur du champ login.
@@ -64,7 +65,7 @@ public class LoginPresenter extends AbstractActivity {
 		 * @param login
 		 *            valeur à mettre à jour
 		 */
-		void setLogin(TextBox login);
+		void setLoginText(String loginText);
 
 		/**
 		 * Methode d'acces en écriture à la valeur du champ passwd.
@@ -72,13 +73,19 @@ public class LoginPresenter extends AbstractActivity {
 		 * @param passwd
 		 *            valeur à mettre à jour
 		 */
-		void setPasswd(PasswordTextBox passwd);
+		void setPasswdText(String passwdText);
 
 		/**
 		 * Methode d'ecriture d'un message d'erreur.
 		 * 
 		 */
 		void errorLogin(String message);
+		
+		/**
+		 * Methode d'affichage de la popup
+		 * 
+		 */
+		void setVisible(boolean visible);
 
 	}
 
@@ -108,50 +115,48 @@ public class LoginPresenter extends AbstractActivity {
 	public void start(AcceptsOneWidget panel,
 			com.google.gwt.event.shared.EventBus eventBusBidon) {
 
-		final DialogBox popup = new DialogBox();
-		popup.add(view);
-		popup.setText("Connexion au site");
-		popup.setPopupPosition(200, 0);
-		popup.show();
 		view.getLoginButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				login(popup);
+				login();
 			}
 		});
 
-		view.getLogin().addKeyPressHandler(new KeyPressHandler() {
+		view.getLoginKeyPress().addKeyPressHandler(new KeyPressHandler() {
 
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
 				if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode()) {
-					login(popup);
+					login();
 				}
 
 			}
 		});
 
-		view.getPasswd().addKeyPressHandler(new KeyPressHandler() {
+		view.getPasswdKeyPress().addKeyPressHandler(new KeyPressHandler() {
 
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
 				if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode()) {
-					login(popup);
+					login();
 				}
 
 			}
 		});
+		
+		view.setVisible(true);
+		
 	}
 
 	public void setLogin(String login) {
-		view.getLogin().setText(login);
+		view.setLoginText(login);
 	}
 
-	private void login(final DialogBox popup) {
+	private void login() {
 		/*
 		 * On appelle le service de login.Si Ok, on ferme la fenetre, sinon on
 		 * affiche un message d'erreur
 		 */
-		dispatcher.execute(new LoginAction(view.getLogin().getText(), view.getPasswd().getText()),
+		dispatcher.execute(new LoginAction(view.getLoginText(), view.getPasswdText()),
 				new AsyncCallback<LoginResult>() {
 					public void onSuccess(final LoginResult result) {
 						Personne utilisateur = result.getUtilisateur();
@@ -159,19 +164,19 @@ public class LoginPresenter extends AbstractActivity {
 							// On envoie un message dans le bus
 							eventBus.fireEvent(new LoginEvent(utilisateur));
 							// On ferme la fenetre de login
-							popup.hide();
+							view.setVisible(false);
 						} else {
 							view.errorLogin("Erreur de connexion");
-							view.getLogin().setText("");
-							view.getPasswd().setText("");
+							view.setLoginText("");
+							view.setPasswdText("");
 						}
 					}
 
 					public void onFailure(final Throwable e) {
 						e.printStackTrace();
 						view.errorLogin(e.getMessage());
-						view.getLogin().setText("");
-						view.getPasswd().setText("");
+						view.setLoginText("");
+						view.setPasswdText("");
 					}
 				});
 	}

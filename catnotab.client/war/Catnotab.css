@@ -70,7 +70,6 @@ form {
 	position: relative;
 }
 
-
 .clear {
 	clear: both;
 	font-size: 0px;
@@ -85,13 +84,17 @@ form {
 	height: 77px;
 }
 
-.nav-divider	{
+.nav-divider {
 	background: url(../images/shared/nav/divider.jpg) top no-repeat;
 	float: left;
 	height: 40px;
 	width: 15px;
-	}
-	
+}
+
+#contenu {
+	min-height: 300px;
+}
+
 /* FOOTER -------------------------------------------------------------- */
 #footer {
 	height: 70px;
@@ -197,18 +200,22 @@ form {
 
 .gwt-DialogBox .dialogTopLeft {
 	BACKGROUND: url(images/circles.png) no-repeat 5px 0px;
+	width: 40px;
 }
 
 .gwt-DialogBox .dialogTopRight {
 	BACKGROUND: url(images/circles.png) no-repeat -20px -80px;
+	width: 40px;
 }
 
 .gwt-DialogBox .dialogBottomLeft {
 	BACKGROUND: url(images/circles.png) no-repeat 5px -51px;
+	width: 40px;
 }
 
 .gwt-DialogBox .dialogBottomRight {
 	BACKGROUND: url(images/circles.png) no-repeat -20px -120px;
+	width: 40px;
 }
 
 * HTML .gwt-DialogBox .dialogTopLeftInner {
@@ -289,5 +296,5 @@ form {
 	list-style: none outside none;
 	margin: 0 10px 0 0;
 	width: auto;
-	outline : none;
+	outline: none;
 }

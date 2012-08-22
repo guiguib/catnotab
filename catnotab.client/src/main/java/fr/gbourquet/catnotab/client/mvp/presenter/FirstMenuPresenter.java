@@ -3,22 +3,18 @@ package fr.gbourquet.catnotab.client.mvp.presenter;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.web.bindery.event.shared.EventBus;
 
-import fr.gbourquet.catnotab.client.event.LoginEvent;
-import fr.gbourquet.catnotab.client.event.LoginEventHandler;
 import fr.gbourquet.catnotab.client.event.MenuEvent;
-import fr.gbourquet.catnotab.client.event.MenuEventHandler;
 import fr.gbourquet.catnotab.client.mvp.ClientFactory;
+import fr.gbourquet.catnotab.client.mvp.place.FirstMenuPlace;
 
 /**
  * Presenter de la vue de login.
@@ -39,14 +35,14 @@ public class FirstMenuPresenter extends AbstractActivity {
 		 * 
 		 * @return PushButton le bouton menu1
 		 */
-		ToggleButton getButtonMenu1();
+		HasValue<Boolean> getButtonMenu1();
 
 		/**
 		 * Methode d'acces au bouton menu2.
 		 * 
 		 * @return PushButton le bouton menu2
 		 */
-		ToggleButton getButtonMenu2();
+		HasValue<Boolean> getButtonMenu2();
 
 	}
 
@@ -54,9 +50,12 @@ public class FirstMenuPresenter extends AbstractActivity {
 	 * Dispatcher pour appeler les services.
 	 */
 	private DispatchAsync dispatcher;
-
+	private PlaceController placeController;
+	
 	private View view;
 	private final EventBus eventBus;
+	private boolean binded = false;
+	private int numActiveMenu = 1;
 
 	/**
 	 * Constructeur.
@@ -70,66 +69,85 @@ public class FirstMenuPresenter extends AbstractActivity {
 		this.dispatcher = factory.getDistpatcher();
 		this.view = factory.getFirstMenuView();
 		this.eventBus = factory.getEventBus();
+		this.placeController = factory.getPlaceController();
 	}
 
-	@Override
-	public void start(AcceptsOneWidget panel,
-			com.google.gwt.event.shared.EventBus eventBusBidon) {
-
-		panel.setWidget(view);
-
-		// On s'affiche
+	private void bind()
+	{
+		RootPanel.get("firstMenu").clear();
 		RootPanel.get("firstMenu").add(view.asWidget());
+		if (!binded)
+		{
+			// On s'affiche
 
-		final ToggleButton button1 = view.getButtonMenu1();
-		final ToggleButton button2 = view.getButtonMenu2();
-		
-	button1.setDown(true);
-		
-		button1.addValueChangeHandler(
-				new ValueChangeHandler<Boolean>() {
+			view.getButtonMenu1().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
-					@Override
-					public void onValueChange(ValueChangeEvent<Boolean> event) {
-						//Si on passe de non enfoncé à enfoncé, on envoit un message dans le bus
-						if (event.getValue())
-							eventBus.fireEvent(new MenuEvent(button1));
-						else 						//Sinon, on le repasse à enfoncé
-							button1.setDown(true);
-					}
-				});
-
-		button2.addValueChangeHandler(
-				new ValueChangeHandler<Boolean>() {
-
-					@Override
-					public void onValueChange(ValueChangeEvent<Boolean> event) {
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					// dans le bus
+					if (event.getValue())
+					{
+						setActiveMenu(1);
+						placeController. goTo(new FirstMenuPlace(1));
 						
-						//Si on passe de non enfoncé à enfoncé, on envoit un message dans le bus
-						if (event.getValue())
-							eventBus.fireEvent(new MenuEvent(button2));
-						else 						//Sinon, on le repasse à enfoncé
-							button2.setDown(true);
-					
-
+						// Si on passe de non enfoncé à enfoncé, on envoit un message
+						eventBus.fireEvent(new MenuEvent(view.getButtonMenu1()));
 					}
-				});
-
-		// On s'inscrit aux evenement du bus pour savoir quel bouton activer
-		eventBus.addHandler(MenuEvent.TYPE, new MenuEventHandler() {
-
-			@Override
-			public void onMenuClicked(MenuEvent event) {
-				
-				if (button1 != (ToggleButton) event.getButton()) {
-					button1.setDown(!event.getButton().getValue());
+					else
+					{
+						// Sinon, on le repasse à enfoncé
+						view.getButtonMenu1().setValue(true);
+					}
 				}
-				if (button2 != (ToggleButton) event.getButton()) {
-					button2.setDown(!event.getButton().getValue());
-				}
+			});
 
-			}
-		});
+			view.getButtonMenu2().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+
+					if (event.getValue())
+					{
+						setActiveMenu(2);
+						// on enregistre l'historique
+						placeController. goTo(new FirstMenuPlace(2));
+						// Si on passe de non enfoncé à enfoncé, on envoit un message
+						eventBus.fireEvent(new MenuEvent(view.getButtonMenu2()));
+					}
+					else
+					{
+						// Sinon, on le repasse à enfoncé
+						view.getButtonMenu2().setValue(true);
+					}
+
+				}
+			});
+			setActiveMenu(1);
+			binded = true;
+		}
+	}
+	
+	@Override
+	public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBusBidon) {
+		panel.setWidget(view);
+		bind();
 	}
 
+	public void setActiveMenu(int numMenu) {
+		this.numActiveMenu = numMenu;
+		switch (this.numActiveMenu)
+		{
+		case 1: 
+			view.getButtonMenu1().setValue(true); 
+			view.getButtonMenu2().setValue(false); 
+			break;
+		case 2: 
+			view.getButtonMenu1().setValue(false);
+			view.getButtonMenu2().setValue(true);
+			break;
+		default:
+			;
+		}
+	}
+	
 }

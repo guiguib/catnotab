@@ -1,17 +1,20 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<g:VerticalPanel>
-		<g:Label ui:field="error"></g:Label>
-		<g:HTMLPanel styleName="loginPanel">
-			<label for="login">Login :</label>
-			<g:TextBox ui:field="login"></g:TextBox>
-			<br />
-			<label for="passwd">Passwd :</label>
-			<g:PasswordTextBox ui:field="passwd"></g:PasswordTextBox>
-			<br />
-		</g:HTMLPanel>
-		<g:Button ui:field="buttonLogin" />
-	</g:VerticalPanel>
-
+	<g:SimplePanel>
+		<g:DialogBox ui:field="popup">
+			<g:VerticalPanel>
+				<g:Label ui:field="error"></g:Label>
+				<g:HTMLPanel styleName="loginPanel">
+					<label for="login">Login :</label>
+					<g:TextBox ui:field="login"></g:TextBox>
+					<br />
+					<label for="passwd">Passwd :</label>
+					<g:PasswordTextBox ui:field="passwd"></g:PasswordTextBox>
+					<br />
+				</g:HTMLPanel>
+				<g:Button ui:field="buttonLogin" />
+			</g:VerticalPanel>
+		</g:DialogBox>
+	</g:SimplePanel>
 </ui:UiBinder> 

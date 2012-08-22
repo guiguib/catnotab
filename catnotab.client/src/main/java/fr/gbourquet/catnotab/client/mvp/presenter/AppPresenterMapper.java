@@ -5,18 +5,21 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 
 import fr.gbourquet.catnotab.client.mvp.ClientFactory;
-import fr.gbourquet.catnotab.client.mvp.place.AcceuilPlace;
+import fr.gbourquet.catnotab.client.mvp.place.AppPlace;
+import fr.gbourquet.catnotab.client.mvp.place.FirstMenuPlace;
 import fr.gbourquet.catnotab.client.mvp.place.LoginPlace;
 
 public class AppPresenterMapper implements ActivityMapper {
     private LoginPresenter loginPresenter;
-    private AcceuilPresenter acceuilPresenter;
+    private AppPresenter appPresenter;
+    private FirstMenuPresenter firstMenuPresenter;
     
     public AppPresenterMapper(ClientFactory clientFactory) {
         super();
-        this.acceuilPresenter = new AcceuilPresenter(clientFactory);
+        this.appPresenter = new AppPresenter(clientFactory);
         this.loginPresenter = new LoginPresenter(clientFactory);
-    }
+        this.firstMenuPresenter = new FirstMenuPresenter(clientFactory);
+        }
 
     
     
@@ -27,8 +30,15 @@ public class AppPresenterMapper implements ActivityMapper {
         	loginPresenter.setLogin(((LoginPlace) place).getLogin());
         	return loginPresenter;
         }
-        else if (place instanceof AcceuilPlace)
-            return acceuilPresenter;
+        else if (place instanceof AppPlace)
+        {
+        	return appPresenter;
+        }
+        else if (place instanceof FirstMenuPlace)
+        {
+        	firstMenuPresenter.setActiveMenu(((FirstMenuPlace) place).getNumMenu());
+        	return firstMenuPresenter;
+        }
         return null;
     }
 }
