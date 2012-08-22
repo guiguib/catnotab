@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+<beans>
+
+	<import resource="classpath:serveurContext.xml" />
+
+	<bean id="dispatch"
+		class="net.customware.gwt.dispatch.server.spring.SpringDispatch">
+		<constructor-arg index="0" ref="registry" />
+	</bean>
+
+	<bean id="registry"
+		class="net.customware.gwt.dispatch.server.DefaultActionHandlerRegistry">
+		<property name="actionHandlers">
+			<list>
+				<bean class="fr.gbourquet.catnotab.service.handler.LoginHandler"/>
+			</list>
+		</property>
+	</bean>
+</beans>
