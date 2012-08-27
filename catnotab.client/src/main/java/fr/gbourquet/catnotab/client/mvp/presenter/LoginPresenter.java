@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
 
+import fr.gbourquet.catnotab.client.LocalSession;
 import fr.gbourquet.catnotab.client.event.LoginEvent;
 import fr.gbourquet.catnotab.client.mvp.ClientFactory;
 import fr.gbourquet.catnotab.serveur.metier.auto.Personne;
@@ -95,8 +96,9 @@ public class LoginPresenter extends AbstractActivity {
 	private DispatchAsync dispatcher;
 
 	private View view;
-	private final EventBus eventBus;
-
+	private EventBus eventBus;
+	private LocalSession localSession;
+	
 	/**
 	 * Constructeur.
 	 * 
@@ -106,22 +108,22 @@ public class LoginPresenter extends AbstractActivity {
 	 *            bus des messages
 	 */
 	public LoginPresenter(ClientFactory factory) {
-		this.dispatcher = factory.getDistpatcher();
 		this.view = factory.getLoginView();
 		this.eventBus = factory.getEventBus();
+		this.dispatcher = factory.getDistpatcher();
+		this.localSession = factory.getLocalSession();
 	}
 
 	@Override
-	public void start(AcceptsOneWidget panel,
-			com.google.gwt.event.shared.EventBus eventBusBidon) {
-
-		view.getLoginButton().addClickHandler(new ClickHandler() {
+	public final void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBusBidon) {
+		
+		getView().getLoginButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				login();
 			}
 		});
 
-		view.getLoginKeyPress().addKeyPressHandler(new KeyPressHandler() {
+		getView().getLoginKeyPress().addKeyPressHandler(new KeyPressHandler() {
 
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
@@ -132,7 +134,7 @@ public class LoginPresenter extends AbstractActivity {
 			}
 		});
 
-		view.getPasswdKeyPress().addKeyPressHandler(new KeyPressHandler() {
+		getView().getPasswdKeyPress().addKeyPressHandler(new KeyPressHandler() {
 
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
@@ -143,12 +145,12 @@ public class LoginPresenter extends AbstractActivity {
 			}
 		});
 		
-		view.setVisible(true);
+		getView().setVisible(true);
 		
 	}
 
 	public void setLogin(String login) {
-		view.setLoginText(login);
+		getView().setLoginText(login);
 	}
 
 	private void login() {
@@ -156,28 +158,44 @@ public class LoginPresenter extends AbstractActivity {
 		 * On appelle le service de login.Si Ok, on ferme la fenetre, sinon on
 		 * affiche un message d'erreur
 		 */
-		dispatcher.execute(new LoginAction(view.getLoginText(), view.getPasswdText()),
+		dispatcher.execute(new LoginAction(getView().getLoginText(), getView().getPasswdText()),
 				new AsyncCallback<LoginResult>() {
 					public void onSuccess(final LoginResult result) {
+						
 						Personne utilisateur = result.getUtilisateur();
+						String token = result.getToken();
+						
 						if (utilisateur != null) {
+							//On met l'utilisateur dans la session locale
+							localSession.setAttribute("utilisateur", utilisateur);
+							
+							//On met le token en session locale
+							localSession.setAttribute("token", token);
+							
 							// On envoie un message dans le bus
 							eventBus.fireEvent(new LoginEvent(utilisateur));
+							
 							// On ferme la fenetre de login
-							view.setVisible(false);
+							getView().setVisible(false);
+							
 						} else {
-							view.errorLogin("Erreur de connexion");
-							view.setLoginText("");
-							view.setPasswdText("");
+							getView().errorLogin("Erreur de connexion");
+							getView().setLoginText("");
+							getView().setPasswdText("");
 						}
 					}
 
 					public void onFailure(final Throwable e) {
 						e.printStackTrace();
-						view.errorLogin(e.getMessage());
-						view.setLoginText("");
-						view.setPasswdText("");
+						getView().errorLogin(e.getMessage());
+						getView().setLoginText("");
+						getView().setPasswdText("");
 					}
 				});
+	}
+	
+	public View getView()
+	{
+		return this.view;
 	}
 }

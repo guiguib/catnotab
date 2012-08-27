@@ -98,11 +98,10 @@ form {
 /* FOOTER -------------------------------------------------------------- */
 #footer {
 	height: 70px;
-	margin: 80px auto 0px auto;
+	margin: 80px 0 0px auto;
 	padding: 0px 0 0 0;
 	text-align: left;
 	min-width: 780px;
-	max-width: 1260px;
 }
 
 #footer-left {
@@ -201,30 +200,36 @@ form {
 .gwt-DialogBox .dialogTopLeft {
 	BACKGROUND: url(images/circles.png) no-repeat 5px 0px;
 	width: 40px;
+	height: 40px;
 }
 
 .gwt-DialogBox .dialogTopRight {
 	BACKGROUND: url(images/circles.png) no-repeat -20px -80px;
 	width: 40px;
+	height: 40px;
 }
 
 .gwt-DialogBox .dialogBottomLeft {
 	BACKGROUND: url(images/circles.png) no-repeat 5px -51px;
 	width: 40px;
+	height: 40px;
 }
 
 .gwt-DialogBox .dialogBottomRight {
 	BACKGROUND: url(images/circles.png) no-repeat -20px -120px;
 	width: 40px;
+	height: 40px;
 }
 
 * HTML .gwt-DialogBox .dialogTopLeftInner {
 	WIDTH: 40px;
+	height: 40px;
 	OVERFLOW: hidden
 }
 
 * HTML .gwt-DialogBox .dialogTopRightInner {
 	WIDTH: 40px;
+	height: 40px;
 	OVERFLOW: hidden
 }
 
@@ -280,6 +285,7 @@ form {
 	list-style: none outside none;
 	margin: 0 10px 0 0;
 	width: auto;
+	cursor: pointer;
 }
 
 .gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering {
@@ -289,12 +295,17 @@ form {
 	float: left;
 	height: 37px;
 	line-height: 35px;
-	padding: 0 10px 0 10px;
+	padding: 0 0 0 10px;
 	text-decoration: none;
 	white-space: nowrap;
 	display: table-cell;
 	list-style: none outside none;
-	margin: 0 10px 0 0;
+	margin: 0;
 	width: auto;
 	outline: none;
+}
+.gwt-ToggleButton-down > .html-face,.gwt-ToggleButton-down-hovering  > .html-face {
+	background: url("images/shared/nav/pro_line_1.gif") repeat scroll right top
+		transparent;
+		padding-right: 10px;
 }

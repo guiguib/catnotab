@@ -13,6 +13,7 @@ public class LoginAction implements Action<LoginResult> {
     }
  
     public LoginAction(String login, String passwd) {
+        super();
         this.login = login;
         this.passwd = passwd;
     }

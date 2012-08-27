@@ -35,7 +35,6 @@ public class LoginHandler implements ActionHandler<LoginAction, LoginResult> {
 		LoginService service = (LoginService) BeanFactory.getInstance()
 				.getService("loginService");
 		try {
-
 			utilisateur = service.login(login, passwd);
 		} catch (ServiceException e) {
 			throw new ActionException(e.getMessage());
@@ -50,8 +49,9 @@ public class LoginHandler implements ActionHandler<LoginAction, LoginResult> {
 
 		session().setAttribute("utilisateur", utilisateur);
 		session().setAttribute("droits", droits);
-		session().setAttribute("token", generateToken());
-		return new LoginResult(utilisateur);
+		String token = generateToken();
+		session().setAttribute("token", token);
+		return new LoginResult(utilisateur,token);
 
 	}
 

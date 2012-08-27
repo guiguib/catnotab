@@ -1,16 +1,10 @@
 package fr.gbourquet.catnotab.client.mvp.presenter;
 
-import net.customware.gwt.dispatch.client.DispatchAsync;
-
-import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.web.bindery.event.shared.EventBus;
 
 import fr.gbourquet.catnotab.client.event.MenuEvent;
 import fr.gbourquet.catnotab.client.mvp.ClientFactory;
@@ -21,7 +15,7 @@ import fr.gbourquet.catnotab.client.mvp.place.FirstMenuPlace;
  * 
  * @author guillaume
  */
-public class FirstMenuPresenter extends AbstractActivity {
+public class FirstMenuPresenter extends AbstractPresenter {
 
 	/**
 	 * Contrat echange avec la vue.
@@ -46,14 +40,12 @@ public class FirstMenuPresenter extends AbstractActivity {
 
 	}
 
+	public View view;
 	/**
 	 * Dispatcher pour appeler les services.
 	 */
-	private DispatchAsync dispatcher;
-	private PlaceController placeController;
+	/*private DispatchAsync dispatcher;*/
 	
-	private View view;
-	private final EventBus eventBus;
 	private boolean binded = false;
 	private int numActiveMenu = 1;
 
@@ -66,21 +58,21 @@ public class FirstMenuPresenter extends AbstractActivity {
 	 *            bus des messages
 	 */
 	public FirstMenuPresenter(ClientFactory factory) {
-		this.dispatcher = factory.getDistpatcher();
-		this.view = factory.getFirstMenuView();
-		this.eventBus = factory.getEventBus();
-		this.placeController = factory.getPlaceController();
+	super(factory);
+	this.view = factory.getFirstMenuView();
+	/*this.dispatcher = factory.getDistpatcher();*/
+	
 	}
 
 	private void bind()
 	{
 		RootPanel.get("firstMenu").clear();
-		RootPanel.get("firstMenu").add(view.asWidget());
+		RootPanel.get("firstMenu").add(getView().asWidget());
 		if (!binded)
 		{
 			// On s'affiche
 
-			view.getButtonMenu1().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			getView().getButtonMenu1().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
 				@Override
 				public void onValueChange(ValueChangeEvent<Boolean> event) {
@@ -88,20 +80,20 @@ public class FirstMenuPresenter extends AbstractActivity {
 					if (event.getValue())
 					{
 						setActiveMenu(1);
-						placeController. goTo(new FirstMenuPlace(1));
+						getPlaceController().goTo(new FirstMenuPlace(1));
 						
 						// Si on passe de non enfoncé à enfoncé, on envoit un message
-						eventBus.fireEvent(new MenuEvent(view.getButtonMenu1()));
+						getEventBus().fireEvent(new MenuEvent(getView().getButtonMenu1()));
 					}
 					else
 					{
 						// Sinon, on le repasse à enfoncé
-						view.getButtonMenu1().setValue(true);
+						getView().getButtonMenu1().setValue(true);
 					}
 				}
 			});
 
-			view.getButtonMenu2().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			getView().getButtonMenu2().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
 				@Override
 				public void onValueChange(ValueChangeEvent<Boolean> event) {
@@ -110,14 +102,14 @@ public class FirstMenuPresenter extends AbstractActivity {
 					{
 						setActiveMenu(2);
 						// on enregistre l'historique
-						placeController. goTo(new FirstMenuPlace(2));
+						getPlaceController().goTo(new FirstMenuPlace(2));
 						// Si on passe de non enfoncé à enfoncé, on envoit un message
-						eventBus.fireEvent(new MenuEvent(view.getButtonMenu2()));
+						getEventBus().fireEvent(new MenuEvent(getView().getButtonMenu2()));
 					}
 					else
 					{
 						// Sinon, on le repasse à enfoncé
-						view.getButtonMenu2().setValue(true);
+						getView().getButtonMenu2().setValue(true);
 					}
 
 				}
@@ -128,8 +120,7 @@ public class FirstMenuPresenter extends AbstractActivity {
 	}
 	
 	@Override
-	public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBusBidon) {
-		panel.setWidget(view);
+	public void start() {
 		bind();
 	}
 
@@ -138,16 +129,21 @@ public class FirstMenuPresenter extends AbstractActivity {
 		switch (this.numActiveMenu)
 		{
 		case 1: 
-			view.getButtonMenu1().setValue(true); 
-			view.getButtonMenu2().setValue(false); 
+			getView().getButtonMenu1().setValue(true); 
+			getView().getButtonMenu2().setValue(false); 
 			break;
 		case 2: 
-			view.getButtonMenu1().setValue(false);
-			view.getButtonMenu2().setValue(true);
+			getView().getButtonMenu1().setValue(false);
+			getView().getButtonMenu2().setValue(true);
 			break;
 		default:
 			;
 		}
+	}
+	
+	public View getView()
+	{
+		return view;
 	}
 	
 }

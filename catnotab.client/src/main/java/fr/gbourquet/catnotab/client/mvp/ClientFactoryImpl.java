@@ -8,6 +8,7 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
+import fr.gbourquet.catnotab.client.LocalSession;
 import fr.gbourquet.catnotab.client.mvp.presenter.AppPresenter;
 import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter;
 import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter.View;
@@ -52,6 +53,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public View getFirstMenuView() {
 		return firstMenuView;
+	}
+
+	@Override
+	public LocalSession getLocalSession() {
+		return LocalSession.getInstance();
 	}
 
 	    
