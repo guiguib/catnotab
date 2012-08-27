@@ -2,14 +2,11 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<typeAliases>
-		<typeAlias alias="Personne"
-			type="fr.gbourquet.catnotab.serveur.metier.Personne" />
-	</typeAliases>
-
 	<!-- define the mapper xml files you want to use -->
 	<mappers>
 		<mapper resource="maps/PersonneMapper.xml" />
+		<mapper resource="maps/DroitMapper.xml" />
+		<mapper resource="maps/DroitPersonneMapper.xml" />
 	</mappers>
 
 </configuration>

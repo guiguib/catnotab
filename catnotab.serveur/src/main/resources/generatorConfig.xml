@@ -17,7 +17,7 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
-		<javaModelGenerator targetPackage="fr.gbourquet.catnotab.serveur.metier"
+		<javaModelGenerator targetPackage="fr.gbourquet.catnotab.serveur.metier.auto"
 			targetProject="src/main/java">
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
@@ -29,7 +29,7 @@
 		</sqlMapGenerator>
 
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="fr.gbourquet.catnotab.dao" targetProject="src/main/java">
+			targetPackage="fr.gbourquet.catnotab.dao.auto" targetProject="src/main/java">
 			<property name="enableSubPackages" value="false" />
 
 		</javaClientGenerator>
@@ -40,6 +40,16 @@
 			<generatedKey column="id"
 				sqlStatement="SELECT currval(pg_get_serial_sequence('UTILISATEUR', 'id'));"
 				identity="true" />
+		</table>
+		
+		<table schema="catnotab" tableName="DROIT" modelType=""
+			domainObjectName="Droit">
+			<property name="useActualColumnNames" value="true" />
+		</table>
+		
+		<table schema="catnotab" tableName="DROIT_UTILISATEUR" modelType=""
+			domainObjectName="DroitPersonne">
+			<property name="useActualColumnNames" value="true" />
 		</table>
 
 	</context>

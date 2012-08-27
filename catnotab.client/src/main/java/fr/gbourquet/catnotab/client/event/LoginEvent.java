@@ -2,7 +2,7 @@ package fr.gbourquet.catnotab.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import fr.gbourquet.catnotab.serveur.metier.Personne;
+import fr.gbourquet.catnotab.serveur.metier.auto.Personne;
 
 
 public class LoginEvent extends GwtEvent<LoginEventHandler> {

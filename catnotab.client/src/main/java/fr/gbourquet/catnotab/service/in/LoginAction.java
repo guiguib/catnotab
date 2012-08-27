@@ -11,7 +11,7 @@ public class LoginAction implements Action<LoginResult> {
     /** For serialization only. */
     LoginAction() {
     }
-
+ 
     public LoginAction(String login, String passwd) {
         this.login = login;
         this.passwd = passwd;

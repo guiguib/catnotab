@@ -1,7 +1,7 @@
 package fr.gbourquet.catnotab.service.out;
 
 import net.customware.gwt.dispatch.shared.Result;
-import fr.gbourquet.catnotab.serveur.metier.Personne;
+import fr.gbourquet.catnotab.serveur.metier.auto.Personne;
 
 public class LoginResult implements Result {
     

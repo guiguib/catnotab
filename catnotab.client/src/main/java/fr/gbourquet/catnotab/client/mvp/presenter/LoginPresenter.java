@@ -17,7 +17,7 @@ import com.google.web.bindery.event.shared.EventBus;
 
 import fr.gbourquet.catnotab.client.event.LoginEvent;
 import fr.gbourquet.catnotab.client.mvp.ClientFactory;
-import fr.gbourquet.catnotab.serveur.metier.Personne;
+import fr.gbourquet.catnotab.serveur.metier.auto.Personne;
 import fr.gbourquet.catnotab.service.in.LoginAction;
 import fr.gbourquet.catnotab.service.out.LoginResult;
 

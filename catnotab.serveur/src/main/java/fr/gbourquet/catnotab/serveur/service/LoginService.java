@@ -1,7 +1,10 @@
 package fr.gbourquet.catnotab.serveur.service;
 
-import fr.gbourquet.catnotab.serveur.metier.Personne;
-import fr.gbourquet.catnotab.serveur.service.Exception.ServiceException;
+import java.util.List;
+
+import fr.gbourquet.catnotab.serveur.metier.auto.DroitPersonneKey;
+import fr.gbourquet.catnotab.serveur.metier.auto.Personne;
+import fr.gbourquet.catnotab.serveur.service.exception.ServiceException;
 
 /**
  * Interface pour les services Login.
@@ -19,5 +22,5 @@ public interface LoginService extends Service {
      * @throws ServiceException 
      */
     Personne login(final String email, final String password) throws ServiceException;
-
+    List<DroitPersonneKey> getDroits(Personne personne)  throws ServiceException ;
 }

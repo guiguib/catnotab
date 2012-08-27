@@ -8,10 +8,11 @@ import java.util.List;
 import org.apache.commons.codec.binary.Base64;
 
 import fr.gbourquet.catnotab.dao.DaoFactory;
-import fr.gbourquet.catnotab.serveur.metier.Personne;
-import fr.gbourquet.catnotab.serveur.metier.PersonneExample;
-import fr.gbourquet.catnotab.serveur.metier.PersonneExample.Criteria;
-import fr.gbourquet.catnotab.serveur.service.Exception.ServiceException;
+import fr.gbourquet.catnotab.serveur.metier.auto.DroitPersonneExample;
+import fr.gbourquet.catnotab.serveur.metier.auto.DroitPersonneKey;
+import fr.gbourquet.catnotab.serveur.metier.auto.Personne;
+import fr.gbourquet.catnotab.serveur.metier.auto.PersonneExample;
+import fr.gbourquet.catnotab.serveur.service.exception.ServiceException;
 
 /**
  * Classe de service pour se logguer à l'application.
@@ -32,10 +33,11 @@ public class LoginServiceImpl implements LoginService {
 	 * @return L'utilisateur qui s'est loggué
 	 * @throws ServiceException 
 	 */
+	@Override
 	public final Personne login(final String ident, final String password) throws ServiceException {
 
 		PersonneExample requetePersonne = new PersonneExample();
-		Criteria critere = requetePersonne.createCriteria();
+		fr.gbourquet.catnotab.serveur.metier.auto.PersonneExample.Criteria critere = requetePersonne.createCriteria();
 		critere.andLoginEqualTo(ident);
 		critere.andPasswdEqualTo(encrypt(password));
 		List<Personne> util =daoFactory.getPersonneDAO().selectByExample(requetePersonne);
@@ -48,6 +50,23 @@ public class LoginServiceImpl implements LoginService {
 		return util.get(0);
 	}
 
+	@Override
+	/**
+	 * Methode exécutant le service.
+	 * 
+	 * @param personne
+	 *            personne dont on veut récupérer les droits
+	 * @return La liste des droits de l a personne
+	 * @throws ServiceException 
+	 */
+	public List<DroitPersonneKey> getDroits(Personne personne)  throws ServiceException {
+		DroitPersonneExample requeteDroit = new DroitPersonneExample();
+		fr.gbourquet.catnotab.serveur.metier.auto.DroitPersonneExample.Criteria critere = requeteDroit.createCriteria();
+		critere.andIdutilisateurEqualTo(personne.getId());
+		
+	    return daoFactory.getDroitPersonneDAO().selectByExample(requeteDroit);
+	}
+	
 	public void setDaoFactory(DaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
@@ -68,5 +87,9 @@ public class LoginServiceImpl implements LoginService {
 		byte[] hash = (new Base64()).encode(raw); // step 5
 		return new String(hash); // step 6
 	}
+
+
+
+	
 
 }

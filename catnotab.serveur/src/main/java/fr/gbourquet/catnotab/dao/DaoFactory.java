@@ -2,6 +2,9 @@ package fr.gbourquet.catnotab.dao;
 
 import org.apache.ibatis.session.SqlSession;
 
+import fr.gbourquet.catnotab.dao.auto.DroitPersonneMapper;
+import fr.gbourquet.catnotab.dao.auto.PersonneMapper;
+
 public class DaoFactory {
 	/**
 	 * SqlSession.
@@ -30,6 +33,15 @@ public class DaoFactory {
 	public final PersonneMapper getPersonneDAO() {
 		try {
 			PersonneMapper mapper = sqlSession.getMapper(PersonneMapper.class);
+			return mapper;
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public final DroitPersonneMapper getDroitPersonneDAO() {
+		try {
+			DroitPersonneMapper mapper = sqlSession.getMapper(DroitPersonneMapper.class);
 			return mapper;
 		} finally {
 			sqlSession.close();

@@ -1,7 +1,10 @@
 --Type d'utilisateurs
-INSERT INTO catnotab.libelle(code,defaut)  VALUES ('ADMIN','Administrateur');
-INSERT INTO catnotab.libelle(code,defaut)  VALUES ('ELEVE','Elève');
-INSERT INTO catnotab.libelle(code,defaut)  VALUES ('PROV','Proviseur');
-INSERT INTO catnotab.libelle(code,defaut)  VALUES ('PROV_ADJ','Proviseur adjoint');
-INSERT INTO catnotab.libelle(code,defaut)  VALUES ('PROF','Professeur');
-INSERT INTO catnotab.libelle(code,defaut)  VALUES ('PARENT','Parent');
+INSERT INTO catnotab.libelle(code,defaut)  VALUES ('TU_ADMIN','Administrateur');
+INSERT INTO catnotab.libelle(code,defaut)  VALUES ('TU_ELEVE','Elève');
+INSERT INTO catnotab.libelle(code,defaut)  VALUES ('TU_PROV','Proviseur');
+INSERT INTO catnotab.libelle(code,defaut)  VALUES ('TU_PROV_AD','Proviseur adjoint');
+INSERT INTO catnotab.libelle(code,defaut)  VALUES ('TU_PROF','Professeur');
+INSERT INTO catnotab.libelle(code,defaut)  VALUES ('TU_PARENT','Parent');
+
+--droits
+INSERT INTO catnotab.libelle(code,defaut)  VALUES ('D_S_ELEVE','Selection des élèves'); --exemple à supprimer
