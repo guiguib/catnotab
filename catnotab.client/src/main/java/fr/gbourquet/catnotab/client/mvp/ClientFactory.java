@@ -11,11 +11,17 @@ import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter;
 import fr.gbourquet.catnotab.client.mvp.presenter.LoginPresenter;
 
 public interface ClientFactory {
-    EventBus getEventBus();
-    PlaceController getPlaceController();
-    DispatchAsync getDistpatcher();
-    AppPresenter.View getAppView();
-    LoginPresenter.View getLoginView();
+	EventBus getEventBus();
+
+	PlaceController getPlaceController();
+
+	DispatchAsync getDistpatcher();
+
+	AppPresenter.View getAppView();
+
+	LoginPresenter.View getLoginView();
+
 	FirstMenuPresenter.View getFirstMenuView();
+
 	LocalSession getLocalSession();
 }

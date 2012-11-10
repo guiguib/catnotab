@@ -1,11 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<g:HorizontalPanel>
-		<g:ToggleButton ui:field="menu1">Tableau de bord</g:ToggleButton>
-		<g:HTMLPanel><div class="nav-divider"> </div></g:HTMLPanel>
-		<g:ToggleButton ui:field="menu2">Administration</g:ToggleButton>
-		<g:HTMLPanel><div class="nav-divider"> </div></g:HTMLPanel>
+	<g:HorizontalPanel ui:field="panel">
 	</g:HorizontalPanel>
-	
+
 </ui:UiBinder> 

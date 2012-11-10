@@ -17,6 +17,9 @@ import fr.gbourquet.catnotab.client.mvp.place.FirstMenuPlace;
  */
 public class FirstMenuPresenter extends AbstractPresenter {
 
+	public static final int ACCEUIL          = 0;
+	public static final int ADMINISTRATION   = 1;
+
 	/**
 	 * Contrat echange avec la vue.
 	 * 
@@ -25,18 +28,13 @@ public class FirstMenuPresenter extends AbstractPresenter {
 	public interface View extends IsWidget {
 
 		/**
-		 * Methode d'acces au bouton menu1.
+		 * Methode d'acces aux boutons du menu.
 		 * 
-		 * @return PushButton le bouton menu1
+		 * @return PushButton le bouton
 		 */
-		HasValue<Boolean> getButtonMenu1();
+		HasValue<Boolean> getButton(int numButton);
 
-		/**
-		 * Methode d'acces au bouton menu2.
-		 * 
-		 * @return PushButton le bouton menu2
-		 */
-		HasValue<Boolean> getButtonMenu2();
+		void showAuthorizedButtons(boolean[] droits);
 
 	}
 
@@ -44,106 +42,90 @@ public class FirstMenuPresenter extends AbstractPresenter {
 	/**
 	 * Dispatcher pour appeler les services.
 	 */
-	/*private DispatchAsync dispatcher;*/
-	
-	private boolean binded = false;
-	private int numActiveMenu = 1;
+	/* private DispatchAsync dispatcher; */
+
+	private int numActiveMenu = 0;
 
 	/**
 	 * Constructeur.
 	 * 
 	 * @param display
-	 *            Class implementant la vue
+	 *           Class implementant la vue
 	 * @param eventBus
-	 *            bus des messages
+	 *           bus des messages
 	 */
 	public FirstMenuPresenter(ClientFactory factory) {
-	super(factory);
-	this.view = factory.getFirstMenuView();
-	/*this.dispatcher = factory.getDistpatcher();*/
-	
-	}
-
-	private void bind()
-	{
-		RootPanel.get("firstMenu").clear();
-		RootPanel.get("firstMenu").add(getView().asWidget());
-		if (!binded)
-		{
-			// On s'affiche
-
-			getView().getButtonMenu1().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-
-				@Override
-				public void onValueChange(ValueChangeEvent<Boolean> event) {
-					// dans le bus
-					if (event.getValue())
-					{
-						setActiveMenu(1);
-						getPlaceController().goTo(new FirstMenuPlace(1));
-						
-						// Si on passe de non enfoncé à enfoncé, on envoit un message
-						getEventBus().fireEvent(new MenuEvent(getView().getButtonMenu1()));
-					}
-					else
-					{
-						// Sinon, on le repasse à enfoncé
-						getView().getButtonMenu1().setValue(true);
-					}
-				}
-			});
-
-			getView().getButtonMenu2().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-
-				@Override
-				public void onValueChange(ValueChangeEvent<Boolean> event) {
-
-					if (event.getValue())
-					{
-						setActiveMenu(2);
-						// on enregistre l'historique
-						getPlaceController().goTo(new FirstMenuPlace(2));
-						// Si on passe de non enfoncé à enfoncé, on envoit un message
-						getEventBus().fireEvent(new MenuEvent(getView().getButtonMenu2()));
-					}
-					else
-					{
-						// Sinon, on le repasse à enfoncé
-						getView().getButtonMenu2().setValue(true);
-					}
-
-				}
-			});
-			setActiveMenu(1);
-			binded = true;
-		}
-	}
-	
-	@Override
-	public void start() {
+		super(factory);
+		this.view = factory.getFirstMenuView();
+		/* this.dispatcher = factory.getDistpatcher(); */
 		bind();
 	}
 
-	public void setActiveMenu(int numMenu) {
+	private void bind() {
+		getView().getButton(ACCEUIL).addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if (event.getValue()) {
+					setActiveMenuButton(ACCEUIL);
+					getPlaceController().goTo(new FirstMenuPlace(ACCEUIL));
+					
+					// Si on passe de non enfoncé à enfoncé, on
+					// envoit un message
+					getEventBus().fireEvent(new MenuEvent(getView().getButton(ACCEUIL)));
+				} else {
+					// Sinon, on le repasse à enfoncé
+					getView().getButton(ACCEUIL).setValue(true);
+				}
+			}
+		});
+
+		getView().getButton(ADMINISTRATION).addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if (event.getValue()) {
+					setActiveMenuButton(ADMINISTRATION);
+					getPlaceController().goTo(new FirstMenuPlace(ADMINISTRATION));
+					
+					// Si on passe de non enfoncé à enfoncé, on
+					// envoit un message
+					getEventBus().fireEvent(new MenuEvent(getView().getButton(ADMINISTRATION)));
+				} else {
+					// Sinon, on le repasse à enfoncé
+					getView().getButton(ADMINISTRATION).setValue(true);
+				}
+			}
+		});
+
+	}
+
+	@Override
+	public void start() {
+		RootPanel.get("firstMenu").clear();
+		RootPanel.get("firstMenu").add(getView().asWidget());
+		boolean[] authorizations = { true, false };
+		view.showAuthorizedButtons(authorizations);
+	}
+
+	public void setActiveMenuButton(int numMenu) {
 		this.numActiveMenu = numMenu;
-		switch (this.numActiveMenu)
-		{
-		case 1: 
-			getView().getButtonMenu1().setValue(true); 
-			getView().getButtonMenu2().setValue(false); 
+		switch (this.numActiveMenu) {
+		case ACCEUIL:
+			getView().getButton(ACCEUIL).setValue(true);
+			getView().getButton(ADMINISTRATION).setValue(false);
 			break;
-		case 2: 
-			getView().getButtonMenu1().setValue(false);
-			getView().getButtonMenu2().setValue(true);
+		case ADMINISTRATION:
+			getView().getButton(ACCEUIL).setValue(false);
+			getView().getButton(ADMINISTRATION).setValue(true);
 			break;
 		default:
 			;
 		}
 	}
-	
-	public View getView()
-	{
+
+	public View getView() {
 		return view;
 	}
-	
+
 }

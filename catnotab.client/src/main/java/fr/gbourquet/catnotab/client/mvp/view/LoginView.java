@@ -42,6 +42,7 @@ public class LoginView extends Composite implements LoginPresenter.View  {
 		initWidget(uiBinder.createAndBindUi(this));
 		buttonLogin.setText("Login");
 		error.setText("Veuillez entrer vos identifiants de connexion");
+		error.removeStyleName("error");
 		popup.setText("Connexion au site");
 		popup.setPopupPosition(300, 200);
 		popup.setSize("400px","200px");
@@ -86,6 +87,7 @@ public class LoginView extends Composite implements LoginPresenter.View  {
 	@Override
 	public void errorLogin(String message) {
 		error.setText(message);
+		error.addStyleName("error");
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package fr.gbourquet.catnotab.serveur.service;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
@@ -31,23 +32,36 @@ public class LoginServiceImpl implements LoginService {
 	 * @param password
 	 *            mot de passe
 	 * @return L'utilisateur qui s'est loggué
-	 * @throws ServiceException 
+	 * @throws ServiceException
 	 */
 	@Override
-	public final Personne login(final String ident, final String password) throws ServiceException {
+	public final Personne login(final String ident, final String password)
+			throws ServiceException {
 
 		PersonneExample requetePersonne = new PersonneExample();
-		fr.gbourquet.catnotab.serveur.metier.auto.PersonneExample.Criteria critere = requetePersonne.createCriteria();
+		fr.gbourquet.catnotab.serveur.metier.auto.PersonneExample.Criteria critere = requetePersonne
+				.createCriteria();
 		critere.andLoginEqualTo(ident);
 		critere.andPasswdEqualTo(encrypt(password));
-		List<Personne> util =daoFactory.getPersonneDAO().selectByExample(requetePersonne);
-	    
-		if (util == null || util.size() == 0)
-		{
-			System.out.println("Util=" + util+" "+util.size());
+
+		List<Personne> util = daoFactory.getPersonneDAO().selectByExample(
+				requetePersonne);
+
+		if (util == null || util.size() == 0) {
 			throw new ServiceException("Utilisateur inconnu");
 		}
-		return util.get(0);
+
+		Date aujourdui = new Date();
+		boolean actif = false;
+		for (Personne utilisateur : util)
+		{
+			actif = aujourdui.after(utilisateur.getDateactivation())
+					&& (utilisateur.getDatedesactivation() == null || aujourdui.before(utilisateur.getDatedesactivation()));
+			if (actif)
+				return utilisateur;
+		}
+		
+		throw new ServiceException("Utilisateur désactivé");
 	}
 
 	@Override
@@ -59,14 +73,16 @@ public class LoginServiceImpl implements LoginService {
 	 * @return La liste des droits de l a personne
 	 * @throws ServiceException 
 	 */
-	public List<DroitPersonneKey> getDroits(Personne personne)  throws ServiceException {
+	public List<DroitPersonneKey> getDroits(Personne personne)
+			throws ServiceException {
 		DroitPersonneExample requeteDroit = new DroitPersonneExample();
-		fr.gbourquet.catnotab.serveur.metier.auto.DroitPersonneExample.Criteria critere = requeteDroit.createCriteria();
+		fr.gbourquet.catnotab.serveur.metier.auto.DroitPersonneExample.Criteria critere = requeteDroit
+				.createCriteria();
 		critere.andIdutilisateurEqualTo(personne.getId());
-		
-	    return daoFactory.getDroitPersonneDAO().selectByExample(requeteDroit);
+
+		return daoFactory.getDroitPersonneDAO().selectByExample(requeteDroit);
 	}
-	
+
 	public void setDaoFactory(DaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
@@ -87,9 +103,5 @@ public class LoginServiceImpl implements LoginService {
 		byte[] hash = (new Base64()).encode(raw); // step 5
 		return new String(hash); // step 6
 	}
-
-
-
-	
 
 }

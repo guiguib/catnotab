@@ -41,6 +41,10 @@ form {
 	padding: 0;
 }
 
+.error {
+	color: #f00;
+}
+
 #page-top-outer {
 	background: url(../images/shared/top_bg.jpg) top center repeat-x;
 	border-bottom: 1px solid #7e7e7e;
@@ -70,6 +74,13 @@ form {
 	position: relative;
 }
 
+#secondMenu {
+	margin: 0 0 0 30px;
+	max-width: 1260px;
+	min-width: 850px;
+	height: 40px;
+}
+
 .clear {
 	clear: both;
 	font-size: 0px;
@@ -81,7 +92,7 @@ form {
 
 .nav-outer-repeat {
 	background: url(../images/shared/nav/repeat.jpg) repeat-x;
-	height: 77px;
+	height: 40px;
 }
 
 .nav-divider {
@@ -278,7 +289,7 @@ form {
 	float: left;
 	height: 37px;
 	line-height: 35px;
-	padding: 0 10px 0 10px;
+	padding: 0 0 0 10px;
 	text-decoration: none;
 	white-space: nowrap;
 	display: table-cell;
@@ -304,8 +315,10 @@ form {
 	width: auto;
 	outline: none;
 }
-.gwt-ToggleButton-down > .html-face,.gwt-ToggleButton-down-hovering  > .html-face {
-	background: url("images/shared/nav/pro_line_1.gif") repeat scroll right top
-		transparent;
-		padding-right: 10px;
+
+.gwt-ToggleButton-down>.html-face,.gwt-ToggleButton-down-hovering>.html-face
+	{
+	background: url("images/shared/nav/pro_line_1.gif") repeat scroll right
+		top transparent;
+	padding-right: 10px;
 }

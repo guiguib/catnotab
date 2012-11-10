@@ -51,8 +51,9 @@ public class LoginPresenter extends AbstractActivity {
 		String getPasswdText();
 
 		HasKeyPressHandlers getLoginKeyPress();
+
 		HasKeyPressHandlers getPasswdKeyPress();
-		
+
 		/**
 		 * Methode d'acces au bouton login.
 		 * 
@@ -81,7 +82,7 @@ public class LoginPresenter extends AbstractActivity {
 		 * 
 		 */
 		void errorLogin(String message);
-		
+
 		/**
 		 * Methode d'affichage de la popup
 		 * 
@@ -98,7 +99,7 @@ public class LoginPresenter extends AbstractActivity {
 	private View view;
 	private EventBus eventBus;
 	private LocalSession localSession;
-	
+
 	/**
 	 * Constructeur.
 	 * 
@@ -112,11 +113,10 @@ public class LoginPresenter extends AbstractActivity {
 		this.eventBus = factory.getEventBus();
 		this.dispatcher = factory.getDistpatcher();
 		this.localSession = factory.getLocalSession();
+		bind();
 	}
 
-	@Override
-	public final void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBusBidon) {
-		
+	public void bind() {
 		getView().getLoginButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				login();
@@ -144,9 +144,16 @@ public class LoginPresenter extends AbstractActivity {
 
 			}
 		});
-		
-		getView().setVisible(true);
-		
+	}
+
+	@Override
+	public final void start(AcceptsOneWidget panel,
+			com.google.gwt.event.shared.EventBus eventBusBidon) {
+
+		// Si on déjà loggué, on ne fait rien
+		if (localSession.getAttribute("utilisateur") == null)
+			getView().setVisible(true);
+
 	}
 
 	public void setLogin(String login) {
@@ -158,44 +165,43 @@ public class LoginPresenter extends AbstractActivity {
 		 * On appelle le service de login.Si Ok, on ferme la fenetre, sinon on
 		 * affiche un message d'erreur
 		 */
-		dispatcher.execute(new LoginAction(getView().getLoginText(), getView().getPasswdText()),
-				new AsyncCallback<LoginResult>() {
-					public void onSuccess(final LoginResult result) {
-						
-						Personne utilisateur = result.getUtilisateur();
-						String token = result.getToken();
-						
-						if (utilisateur != null) {
-							//On met l'utilisateur dans la session locale
-							localSession.setAttribute("utilisateur", utilisateur);
-							
-							//On met le token en session locale
-							localSession.setAttribute("token", token);
-							
-							// On envoie un message dans le bus
-							eventBus.fireEvent(new LoginEvent(utilisateur));
-							
-							// On ferme la fenetre de login
-							getView().setVisible(false);
-							
-						} else {
-							getView().errorLogin("Erreur de connexion");
-							getView().setLoginText("");
-							getView().setPasswdText("");
-						}
-					}
+		dispatcher.execute(new LoginAction(getView().getLoginText(), getView()
+				.getPasswdText()), new AsyncCallback<LoginResult>() {
+			public void onSuccess(final LoginResult result) {
 
-					public void onFailure(final Throwable e) {
-						e.printStackTrace();
-						getView().errorLogin(e.getMessage());
-						getView().setLoginText("");
-						getView().setPasswdText("");
-					}
-				});
+				Personne utilisateur = result.getUtilisateur();
+				String token = result.getToken();
+
+				if (utilisateur != null) {
+					// On met l'utilisateur dans la session locale
+					localSession.setAttribute("utilisateur", utilisateur);
+
+					// On met le token en session locale
+					localSession.setAttribute("token", token);
+
+					// On envoie un message dans le bus
+					eventBus.fireEvent(new LoginEvent(utilisateur));
+
+					// On ferme la fenetre de login
+					getView().setVisible(false);
+
+				} else {
+					getView().errorLogin("Erreur de connexion");
+					getView().setLoginText("");
+					getView().setPasswdText("");
+				}
+			}
+
+			public void onFailure(final Throwable e) {
+				e.printStackTrace();
+				getView().errorLogin(e.getMessage());
+				getView().setLoginText("");
+				getView().setPasswdText("");
+			}
+		});
 	}
-	
-	public View getView()
-	{
+
+	public View getView() {
 		return this.view;
 	}
 }

@@ -7,6 +7,8 @@ CREATE TABLE catnotab.UTILISATEUR (
                 nom VARCHAR(80) NOT NULL,
                 prenom VARCHAR(80) NOT NULL,
                 codeTypeUtilisateur VARCHAR(10) NOT NULL,
+                dateActivation DATE NOT NULL,
+                dateDesactivation DATE,
                 CONSTRAINT idUtilisateur PRIMARY KEY (id)
 );
 

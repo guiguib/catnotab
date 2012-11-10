@@ -36,7 +36,7 @@ public class AppPresenterMapper implements ActivityMapper {
         }
         else if (place instanceof FirstMenuPlace)
         {
-        	firstMenuPresenter.setActiveMenu(((FirstMenuPlace) place).getNumMenu());
+        	firstMenuPresenter.setActiveMenuButton(((FirstMenuPlace) place).getNumMenu());
         	return firstMenuPresenter;
         }
         return null;

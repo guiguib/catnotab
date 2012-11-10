@@ -11,24 +11,23 @@ import com.google.web.bindery.event.shared.SimpleEventBus;
 import fr.gbourquet.catnotab.client.LocalSession;
 import fr.gbourquet.catnotab.client.mvp.presenter.AppPresenter;
 import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter;
-import fr.gbourquet.catnotab.client.mvp.presenter.FirstMenuPresenter.View;
 import fr.gbourquet.catnotab.client.mvp.presenter.LoginPresenter;
 import fr.gbourquet.catnotab.client.mvp.view.AppView;
 import fr.gbourquet.catnotab.client.mvp.view.FirstMenuView;
 import fr.gbourquet.catnotab.client.mvp.view.LoginView;
 
 public class ClientFactoryImpl implements ClientFactory {
-    private final EventBus eventBus = new SimpleEventBus();
-    private final PlaceController placeController = new PlaceController(eventBus);
-    private final AppPresenter.View appView = new AppView();
-    private final LoginPresenter.View loginView = new LoginView();
-    private final FirstMenuPresenter.View firstMenuView = new FirstMenuView();
-    private final DispatchAsync dispatcher = new StandardDispatchAsync(new DefaultExceptionHandler());
+	private final EventBus eventBus = new SimpleEventBus();
+	private final PlaceController placeController = new PlaceController(eventBus);
+	private final AppPresenter.View appView = new AppView();
+	private final LoginPresenter.View loginView = new LoginView();
+	private final FirstMenuPresenter.View firstMenuView = new FirstMenuView();
+	private final DispatchAsync dispatcher = new StandardDispatchAsync(new DefaultExceptionHandler());
 
-    @Override
-    public EventBus getEventBus() {
-        return eventBus;
-    }
+	@Override
+	public EventBus getEventBus() {
+		return eventBus;
+	}
 
 	@Override
 	public PlaceController getPlaceController() {
@@ -51,7 +50,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	}
 
 	@Override
-	public View getFirstMenuView() {
+	public FirstMenuPresenter.View getFirstMenuView() {
 		return firstMenuView;
 	}
 
@@ -60,5 +59,4 @@ public class ClientFactoryImpl implements ClientFactory {
 		return LocalSession.getInstance();
 	}
 
-	    
 }

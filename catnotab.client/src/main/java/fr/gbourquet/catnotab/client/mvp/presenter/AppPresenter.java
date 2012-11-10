@@ -18,32 +18,36 @@ public class AppPresenter extends AbstractPresenter {
 	}
 
 	public View view;
-	
+
 	public AppPresenter(ClientFactory factory) {
 		super(factory);
 		view = factory.getAppView();
+		bind();
 	}
 
-	@Override
-	public void start() {
-		
+	public void bind() {
 		// On s'inscrit aux evenements du Bus
 		getEventBus().addHandler(LoginEvent.TYPE, new LoginEventHandler() {
 
 			@Override
 			public void onLogin(final LoginEvent event) {
-				
-				//On s'affiche
-				RootPanel.get("contenu").add(getView().asWidget() );
-				
-				//On affiche le menu1
-				getFactory().getPlaceController().goTo(new FirstMenuPlace(1));
+
+				// On s'affiche
+				RootPanel.get("contenu").add(getView().asWidget());
+
+				// On affiche le menu1
+				getFactory().getPlaceController().goTo(new FirstMenuPlace(FirstMenuPresenter.ACCEUIL));
 			}
 		});
+
 	}
-	
-	public View getView()
-	{
+
+	@Override
+	public void start() {
+
+	}
+
+	public View getView() {
 		return view;
 	}
 }

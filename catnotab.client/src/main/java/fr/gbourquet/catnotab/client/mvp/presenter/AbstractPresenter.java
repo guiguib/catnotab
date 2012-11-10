@@ -43,7 +43,7 @@ public abstract class AbstractPresenter implements Activity {
 			com.google.gwt.event.shared.EventBus eventBus) {
 		
 		// Si on n'est pas loggué, on affiche la popup
-		if (factory.getLocalSession().getAttribute("personne") == null)
+		if (factory.getLocalSession().getAttribute("utilisateur") == null)
 			factory.getPlaceController().goTo(new LoginPlace("", ""));
 
 		start();
