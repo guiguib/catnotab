@@ -4,3 +4,14 @@
 *.jar
 *.war
 *.ear
+catnotab.client/.gwt/
+catnotab.client/gwt-unitCache/
+catnotab.client/target/
+catnotab.client/war/WEB-INF/classes/
+catnotab.client/war/WEB-INF/deploy/
+catnotab.client/war/catnotab/
+catnotab.serveur/target/
+catnotab.sql/src/main/data/test/
+catnotab.sql/target/
+target/
+
